@@ -176,7 +176,12 @@ export default function Navbar({
         >
           <Search className="absolute left-3 w-3.5 h-3.5 text-neutral-400 z-10" />
 
+        <label htmlFor="navbar-tool-search" className="sr-only">
+  Search tools
+</label>
+
           <input
+            id="navbar-tool-search"
             ref={searchRef}
             type="text"
             value={search}
@@ -201,6 +206,8 @@ export default function Navbar({
 
           {search.length > 0 ? (
             <button
+            type="button"
+aria-label="Clear search"
               onClick={() => {
                 setSearch('');
                 setSearchOpen(false);
@@ -209,6 +216,7 @@ export default function Navbar({
               className="absolute right-3 text-neutral-400 hover:text-white"
             >
               <X size={14} />
+              
             </button>
           ) : (
             <span
@@ -290,6 +298,10 @@ export default function Navbar({
           {/* Language Menu */}
           <div className="relative">
             <button
+            type="button"
+aria-label={`Change language. Current language: ${currentTranslations.name}`}
+aria-haspopup="true"
+aria-expanded={langMenuOpen}
               onClick={() => setLangMenuOpen(!langMenuOpen)}
               className={`flex items-center gap-1.5 text-xs font-medium ${
                 darkMode
@@ -333,6 +345,8 @@ export default function Navbar({
 
           {/* Dark Mode */}
           <button
+          type="button"
+aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             onClick={() => setDarkMode(!darkMode)}
             className={`p-2 ${
               darkMode

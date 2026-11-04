@@ -13,9 +13,7 @@ import TermsOfService from './components/TermsOfService';
 import CookiePolicy from './components/CookiePolicy';
 import Contact from './components/Contact';
 
-
 function Home({ lang, setLang, darkMode, setDarkMode }) {
-
   const [activeCategory, setActiveCategory] = useState('Units');
   const [activeTool, setActiveTool] = useState('Length');
 
@@ -25,21 +23,16 @@ function Home({ lang, setLang, darkMode, setDarkMode }) {
     setActiveCategory(category);
     setActiveTool(tool);
 
-     setTimeout(() => {
-    workspaceRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }, 100);
-
-    workspaceRef.current?.scrollIntoView({
-      behavior: 'smooth'
-    });
+    setTimeout(() => {
+      workspaceRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 100);
   };
 
   return (
     <>
-      {/* SECÇÃO SUPERIOR COM GRID E FADE */}
       <div
         className={`relative ${
           darkMode ? 'bg-grid-pattern' : 'bg-grid-pattern-light'
@@ -51,7 +44,8 @@ function Home({ lang, setLang, darkMode, setDarkMode }) {
               ? 'via-[#121212]/50 to-[#121212]'
               : 'via-neutral-50/50 to-neutral-50'
           } pointer-events-none`}
-        ></div>
+          aria-hidden="true"
+        />
 
         <Navbar
           lang={lang}
@@ -61,16 +55,12 @@ function Home({ lang, setLang, darkMode, setDarkMode }) {
           onSelectTool={handleSelectTool}
         />
 
-        <Hero
-          lang={lang}
-          darkMode={darkMode}
-        />
+        <Hero lang={lang} darkMode={darkMode} />
       </div>
 
-      {/* WORKSPACE E CONTEÚDO PRINCIPAL */}
-      <div className="relative z-10 flex flex-col w-full -mt-6">
-
-        <div ref={workspaceRef}>
+      {/* Conteúdo principal da página */}
+      <main id="main-content" className="relative z-10 flex flex-col w-full -mt-6">
+        <div ref={workspaceRef} id="tool-workspace">
           <ToolWorkspace
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
@@ -87,25 +77,18 @@ function Home({ lang, setLang, darkMode, setDarkMode }) {
           darkMode={darkMode}
         />
 
-        <InfoAndFaq
-          lang={lang}
-          darkMode={darkMode}
-        />
-
-      </div>
+        <InfoAndFaq lang={lang} darkMode={darkMode} />
+      </main>
     </>
   );
 }
 
-
 export default function App() {
-
   const [lang, setLang] = useState('EN');
   const [darkMode, setDarkMode] = useState(true);
 
   return (
     <BrowserRouter>
-
       <div
         className={`min-h-screen ${
           darkMode
@@ -113,13 +96,8 @@ export default function App() {
             : 'bg-neutral-50 text-neutral-900'
         } flex flex-col transition-colors`}
       >
-
-        {/* PÁGINAS */}
         <div className="flex-1">
-
           <Routes>
-
-            {/* HOMEPAGE */}
             <Route
               path="/"
               element={
@@ -132,36 +110,15 @@ export default function App() {
               }
             />
 
-            {/* LEGAL PAGES */}
-            <Route
-              path="/privacy-policy"
-              element={<PrivacyPolicy />}
-            />
-
-            <Route
-              path="/terms"
-              element={<TermsOfService />}
-            />
-
-            <Route
-              path="/cookie-policy"
-              element={<CookiePolicy />}
-            />
-
-            <Route
-              path="/contact"
-              element={<Contact />}
-            />
-
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
-
         </div>
 
-        {/* FOOTER GLOBAL */}
         <Footer darkMode={darkMode} />
-
       </div>
-
     </BrowserRouter>
   );
 }
